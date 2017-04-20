@@ -1,0 +1,23 @@
+{
+    "name": "ianrothmann/laravel-model-convention",
+    "description": "A bridge to expose Laravel variables and routes in Vue and Vuex",
+    "version": "0.5.0",
+	"type": "library",
+    "license": "Apache2",
+    "authors": [
+        {
+            "name": "Ian Rothmann",
+            "email": "ian@conceptsphere.com"
+        }
+    ],
+    "require": {
+		"php": ">=5.4.0",
+        "laravel/framework": "5.4.*",
+        "lavary/laravel-menu": "^1.6",
+	},
+	"autoload": {
+        "psr-4": {
+            "IanRothmann\\LaravelVueBridge\\": "src/"
+        }
+    }
+}
