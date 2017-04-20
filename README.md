@@ -1,9 +1,11 @@
 # LaravelVueBridge
 A bridge for exposing Laravel variables and routes inside vue components. It supports Vuex. For use with Multi Page Applications using multiple Vue components. The idea is to get the best of both, between what Laravel and Vue offers.
 
-This package should be used with the VueBridge npm package (link to follow later).
+This package should be used with the VueBridge npm package (https://github.com/ianrothmann/VueBridgeJs).
 
 # Installation
+composer require ianrothmann/laravel-vue-bridge
+
 In config/app.php
 
 Service provider
