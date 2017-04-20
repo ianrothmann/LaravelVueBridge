@@ -1,5 +1,5 @@
 {
-    "name": "ianrothmann/laravel-model-convention",
+    "name": "ianrothmann/laravel-vue-bridge",
     "description": "A bridge to expose Laravel variables and routes in Vue and Vuex",
     "version": "0.5.0",
 	"type": "library",
