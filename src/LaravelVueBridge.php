@@ -44,8 +44,12 @@ class LaravelVueBridge
         $export_vars=json_encode($this->getExposedVariables($defined_vars));
 
         $session_status='';
-        if(session('status')){
-            $session_status='const sessionStatus="'.str_replace('"','\"',session('status')).'";';
+        if(session('error')){
+            $session_status='const sessionStatus={message:"'.str_replace('"','\"',session('error')).'",messagetype:"error"};';
+        }elseif(session('warning')){
+            $session_status='const sessionStatus={message:"'.str_replace('"','\"',session('warning')).'",messagetype:"warning"};';
+        }elseif(session('status')){
+            $session_status='const sessionStatus={message:"'.str_replace('"','\"',session('status')).'",messagetype:"status"};';
         }
 
         $js=<<<TOC
