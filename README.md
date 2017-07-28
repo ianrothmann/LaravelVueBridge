@@ -47,6 +47,6 @@ VueBridge::hideRoutes([array of route names]);
 ```
 
 # View helper
-Replace return `view(...)` in t=your controllers with `return vbview(...)`. You can then create a viewMixin in `resources/js/views/`.
+Replace return `view(...)` in your controllers with `return vbview(...)`. You can then create a viewMixin in `resources/js/views/`.
 
 The file structure inside `resources/js/views/` should match `resources/views/` exactly. for instance `return vbview('profile.update',compact('user'))` will return the `resources/views/profile/update.blade.php` view including the viewMixin `resources/js/views/profile/update.js`. It will also expose the `user` variable in Vuex.
