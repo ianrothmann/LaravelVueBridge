@@ -15,7 +15,18 @@ class VueBridgeServiceProvider extends ServiceProvider
 {
     public function register(){
         $this->app->bind('vue-bridge','IanRothmann\LaravelVueBridge\LaravelVueBridge');
+        $this->registerHelpers();
+    }
 
+    /**
+     * Register helpers file
+     */
+    public function registerHelpers()
+    {
+        if (file_exists( __DIR__.DIRECTORY_SEPARATOR.'../helpers.php'))
+        {
+            require __DIR__.DIRECTORY_SEPARATOR.'../helpers.php';
+        }
     }
 
 

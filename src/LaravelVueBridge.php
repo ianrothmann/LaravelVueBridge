@@ -15,16 +15,14 @@ class LaravelVueBridge
 {
     use ExposeRoutes;
     use ExposeVariables;
+    use ExposeClosure;
 
     private $pagescripts=[];
+    private $viewJsPath='js/views/';
 
     public function __construct()
     {
 
-    }
-
-    public function test(){
-        dd('HALo d');
     }
 
     function view($view,$data=[],$mergeData=[]){
@@ -38,11 +36,32 @@ class LaravelVueBridge
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getViewJsPath()
+    {
+        return $this->viewJsPath;
+    }
+
+    /**
+     * @param string $viewJsPath
+     * @return LaravelVueBridge
+     */
+    public function setViewJsPath($viewJsPath)
+    {
+        $this->viewJsPath = $viewJsPath;
+        return $this;
+    }
+
+
+
 
     public function scripts($defined_vars){
         $export_routes=json_encode($this->getExposedRoutes());
-        $export_vars=json_encode($this->getExposedVariables($defined_vars));
+        $export_vars=json_encode(array_merge($this->getExposedVariables($defined_vars),$this->getClosureVariables()));
 
+       // print_r($export_vars);die();
         $session_status='';
         if(session('error')){
             $session_status='const sessionStatus={message:"'.str_replace('"','\"',session('error')).'",messagetype:"error"};';
@@ -55,13 +74,13 @@ class LaravelVueBridge
         $js=<<<TOC
 <script type="text/javascript">
    const routeActions = $export_routes;
-   const pageData=$export_vars;
+   const serverData=$export_vars;
    $session_status
 </script>
 TOC;
 
         foreach ($this->pagescripts as $script) {
-            $js.='<script src="'.mix('js/pages/'.$script).'"></script>';
+            $js.='<script src="'.mix($this->viewJsPath.$script).'"></script>';
         }
 
         return $js;

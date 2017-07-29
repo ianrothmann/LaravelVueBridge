@@ -9,24 +9,24 @@ composer require ianrothmann/laravel-vue-bridge
 In config/app.php
 
 Service provider
-```php
+```
 IanRothmann\LaravelVueBridge\ServiceProviders\VueBridgeServiceProvider::class
 ```
 Facade
-```php
+```
 'VueBridge' =>IanRothmann\LaravelVueBridge\Facades\VueBridge::class
 ```
 In your main blade file, before 
-```javascript
+```
 <script src="{{ mix('js/app.js') }}"></script> 
 ```
 you should add
-```php
+```
 {!! VueBridge::scripts(get_defined_vars()) !!}
 ```
 # Exposing variables
 In your controller:
-```php
+```
 VueBridge::exposeVariables([array of variable names to expose]);
 
 VueBridge::hideVariables([array of variable names to hide, all others will be exposed]);
@@ -38,7 +38,7 @@ VueBridge::hideAllVariables();
 
 # Exposing Routes
 In web.php or in middleware. Routes are hidden by default:
-```php
+```
 VueBridge::exposeAllRoutes(); //exposes all named routes
 
 VueBridge::exposeRoutes(([array of route names]);
@@ -46,7 +46,4 @@ VueBridge::exposeRoutes(([array of route names]);
 VueBridge::hideRoutes([array of route names]);
 ```
 
-# View helper
-Replace return `view(...)` in your controllers with `return vbview(...)`. You can then create a viewMixin in `resources/js/views/`.
-
-The file structure inside `resources/js/views/` should match `resources/views/` exactly. for instance `return vbview('profile.update',compact('user'))` will return the `resources/views/profile/update.blade.php` view including the viewMixin `resources/js/views/profile/update.js`. It will also expose the `user` variable in Vuex.
+More documentation to follow later
