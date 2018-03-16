@@ -10,6 +10,7 @@ namespace IanRothmann\LaravelVueBridge;
 
 
 use Illuminate\Support\Facades\Route;
+use Spatie\TranslationLoader\LanguageLine;
 
 class LaravelVueBridge
 {
@@ -59,22 +60,29 @@ class LaravelVueBridge
 
     public function scripts($defined_vars){
         $export_routes=json_encode($this->getExposedRoutes());
-        $export_vars=json_encode(array_merge($this->getExposedVariables($defined_vars),$this->getClosureVariables()));
 
+        $locale=\App::getLocale();
+        $language['__lang']=LanguageLine::all()
+            ->mapWithKeys(function($lang) use ($locale){
+                 return [$lang->group.'.'.$lang->key=>$lang->getTranslation($locale)];
+             })->toArray();
+
+        $export_vars=json_encode(array_merge($this->getExposedVariables($defined_vars),$this->getClosureVariables(),$language));
        // print_r($export_vars);die();
         $session_status='';
         if(session('error')){
-            $session_status='const sessionStatus={message:"'.str_replace('"','\"',session('error')).'",messagetype:"error"};';
+            $session_status='var sessionStatus={message:"'.str_replace('"','\"',session('error')).'",messagetype:"error"};';
         }elseif(session('warning')){
-            $session_status='const sessionStatus={message:"'.str_replace('"','\"',session('warning')).'",messagetype:"warning"};';
+            $session_status='var sessionStatus={message:"'.str_replace('"','\"',session('warning')).'",messagetype:"warning"};';
         }elseif(session('status')){
-            $session_status='const sessionStatus={message:"'.str_replace('"','\"',session('status')).'",messagetype:"status"};';
+            $session_status='var sessionStatus={message:"'.str_replace('"','\"',session('status')).'",messagetype:"status"};';
         }
 
         $js=<<<TOC
 <script type="text/javascript">
-   const routeActions = $export_routes;
-   const serverData=$export_vars;
+   var locale='$locale';
+   var routeActions = $export_routes;
+   var serverData=$export_vars;
    $session_status
 </script>
 TOC;
