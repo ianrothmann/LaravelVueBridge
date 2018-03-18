@@ -2,7 +2,7 @@
     "name": "ianrothmann/laravel-vue-bridge",
     "description": "A bridge to expose Laravel variables and routes in Vue and Vuex",
 	"type": "library",
-    "license": "Apache2",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Ian Rothmann",
